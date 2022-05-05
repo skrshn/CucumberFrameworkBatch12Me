@@ -1,0 +1,46 @@
+Feature: Adding employees in HRMS Application
+
+  Background:
+    When user enters valid admin credentials
+    And user clicks on login button
+    Then admin user is successfully logged in
+    When user clicks on PIM option
+    And user navigates to add employee option
+
+  @regression
+  Scenario: Adding one Employee from feature file
+    When user enters firstname middlename and lastname
+    And user clicks on save button
+    Then user is able to add employee successfully
+
+  Scenario: Adding one Employee from cucumber feature file
+    When user enters "sakir" "sako" and "sahin"
+    And user clicks on save button
+    Then user is able to add employee successfully
+
+  Scenario Outline: Adding multiple Employees
+    When user provides "<firstName>" "<middleName>" and "<lastName>"
+    And user clicks on save button
+    Then user is able to add employee successfully
+    Examples:
+      | firstName | middleName | lastName |
+      | john      | j          | doe      |
+      | mary      | m          | jane     |
+      | jim       | m          | poe      |
+      | tim       | t          | toe      |
+
+  @test @datatable
+  Scenario: Adding employee using data table
+    When user enters multiple employee data and verify they are added
+      | firstName | middleName | lastName |
+      | john      | j          | doe      |
+      | mary      | m          | jane     |
+      | jim       | m          | poe      |
+      | tim       | t          | toe      |
+    Then user is able to add all employees successfully
+
+
+  @excel
+  Scenario: Adding employee using excel
+    When user enters multiple employee data from excel and verify they are added
+    Then user is able to add all employees successfully
