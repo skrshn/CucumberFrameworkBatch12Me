@@ -18,6 +18,7 @@ Feature: Adding employees in HRMS Application
     And user clicks on save button
     Then user is able to add employee successfully
 
+  @test @datatable
   Scenario Outline: Adding multiple Employees
     When user provides "<firstName>" "<middleName>" and "<lastName>"
     And user clicks on save button
@@ -29,7 +30,7 @@ Feature: Adding employees in HRMS Application
       | jim       | m          | poe      |
       | tim       | t          | toe      |
 
-  @test @datatable
+
   Scenario: Adding employee using data table
     When user enters multiple employee data and verify they are added
       | firstName | middleName | lastName |
@@ -42,5 +43,4 @@ Feature: Adding employees in HRMS Application
 
   @excel
   Scenario: Adding employee using excel
-    When user enters multiple employee data from excel and verify they are added
-    Then user is able to add all employees successfully
+    When user adds multiple employees from excel file using "EmployeeData" sheet and verify the user added

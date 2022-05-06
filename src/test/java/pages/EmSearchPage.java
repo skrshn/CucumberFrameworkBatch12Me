@@ -24,6 +24,11 @@ public class EmSearchPage extends CommonMethods {
     @FindBy(id = "searchBtn")
     public WebElement searchButton;
 
+    @FindBy(xpath = "//*[@id='resultTable']/tbody/tr/td[2]/a")
+    public WebElement verifyEmployeeAddedField;
+
+
+
     public EmSearchPage() {
         PageFactory.initElements(driver,this);
     }

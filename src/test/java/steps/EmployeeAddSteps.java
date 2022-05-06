@@ -1,21 +1,19 @@
 package steps;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.Assert;
+import org.junit.Before;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import utils.CommonMethods;
-import utils.ConfigReader;
 import utils.Constants;
+import utils.CustomSoftAsserts;
 import utils.ExcelReader;
 
-import java.io.FileInputStream;
 import java.util.*;
 
 public class EmployeeAddSteps extends CommonMethods {
@@ -85,24 +83,44 @@ public class EmployeeAddSteps extends CommonMethods {
         System.out.println("All employees in the data table has been added successfully");
     }
 
-    @When("user enters multiple employee data from excel and verify they are added")
-    public void userEntersMultipleEmployeeDataFromExcelAndVerifyTheyAreAdded() {
-        for (Map<String, String> employee : ExcelReader.excelIntoMap(Constants.TESTDATA_FILEPATH, ConfigReader.getPropertyValue("sheetName"))
-        ) {
-            sendText(emAddPage.firstName, employee.get("FirstName"));
-            sendText(emAddPage.middleName, employee.get("MiddleName"));
-            sendText(emAddPage.lastName, employee.get("LastName"));
-            sendText(emAddPage.photoFile, employee.get("Photograph"));
-            click(emAddPage.loginCheckbox);
-            sendText(emAddPage.employeeUsername, employee.get("Username"));
-            sendText(emAddPage.employeePassword, employee.get("Password"));
-            sendText(emAddPage.employeeRePassword, employee.get("Password"));
-            selectByVisibleText("Disabled");
+    @When("user adds multiple employees from excel file using {string} sheet and verify the user added")
+    public void userAddsMultipleEmployeesFromExcelFileUsingSheetAndVerifyTheUserAdded(String sheetName) {
+        List<Map<String, String>> newEmployees = ExcelReader.excelIntoMap(Constants.TESTDATA_FILEPATH, sheetName);
+        Iterator<Map<String, String>> itr = newEmployees.iterator();
+        while (itr.hasNext()) {
+            Map<String, String> newEmployee = itr.next();
+            sendText(emAddPage.firstName, newEmployee.get("FirstName"));
+            sendText(emAddPage.middleName, newEmployee.get("MiddleName"));
+            sendText(emAddPage.lastName, newEmployee.get("LastName"));
+            String employeeID = emAddPage.employeeID.getAttribute("value");
+            sendText(emAddPage.photoFile, newEmployee.get("Photograph"));
+            if (!emAddPage.loginCheckbox.isSelected()) {
+                click(emAddPage.loginCheckbox);
+            }
+            sendText(emAddPage.employeeUsername, newEmployee.get("Username"));
+            sendText(emAddPage.employeePassword, newEmployee.get("Password"));
+            sendText(emAddPage.employeeRePassword, newEmployee.get("Password"));
+            selectByVisibleText("Enabled");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             click(emAddPage.saveButton);
+            click(emSearchPage.empListOption);
+            sendText(emSearchPage.employeeIDField, employeeID);
+            click(emSearchPage.searchButton);
 
-            String fullEmployeeName = employee.get("FirstName") + " " + employee.get("MiddleName") + " " + employee.get("LastName");
-            Assert.assertEquals(fullEmployeeName, emAddPage.employeeNameVerifyText.getText());
 
+            List<WebElement> rowData = driver.findElements(By.xpath("//*[@id='resultTable']/tbody/tr"));
+            for (int i = 0; i < rowData.size(); i++) {
+                String rowText = rowData.get(i).getText();
+                String expectedData = employeeID + " " + newEmployee.get("FirstName") + " "
+                        + newEmployee.get("MiddleName") + " " + newEmployee.get("LastName");
+
+                //new CustomSoftAsserts().assertEquals(expectedData, rowText);
+                Assert.assertEquals(expectedData, rowText);
+            }
             click(emSearchPage.addEmpOption);
         }
     }

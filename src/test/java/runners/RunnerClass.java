@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         glue = "steps",
         dryRun = false,
         monochrome = true,
-        tags = "@excel"
+        tags = "@test and @datatable"
 )
 
 public class RunnerClass {

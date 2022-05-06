@@ -1,16 +1,21 @@
 package utils;
 
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import steps.Hooks;
 import steps.PageInitializers;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class CommonMethods extends PageInitializers {
@@ -47,6 +52,10 @@ public class CommonMethods extends PageInitializers {
         element.sendKeys(textToSend);
     }
 
+    public static String getText(WebElement element) {
+        return element.getText();
+    }
+
     public static WebDriverWait getWait() {
         WebDriverWait wait = new WebDriverWait(driver, Constants.EXPLICIT_WAIT);
         return wait;
@@ -70,9 +79,29 @@ public class CommonMethods extends PageInitializers {
         getJSExecutor().executeScript("arguments[0].click;", element);
     }
 
-    public static void selectByVisibleText(String option){
+    public static void selectByVisibleText(String option) {
         Select select = new Select(emAddPage.employeeStatus);
         select.selectByVisibleText(option);
     }
 
+    public static byte[] takeScreenShot(String fileName) {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        byte[] picBytes = ts.getScreenshotAs(OutputType.BYTES);
+        File sourceFile = ts.getScreenshotAs(OutputType.FILE);
+
+        try {
+            FileUtils.copyFile(sourceFile, new File(Constants.SCREENSHOT_FILEPATH + fileName + " " + getTimeStamp("yyyy-MM-dd-HH-mm-ss")+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return picBytes;
+    }
+
+
+    public static String getTimeStamp(String pattern) {
+        Date date = new Date();
+        //to format the date according to our choice we want to implement in this function
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
 }

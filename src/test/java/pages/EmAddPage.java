@@ -20,6 +20,9 @@ public class EmAddPage extends CommonMethods {
     @FindBy(id = "btnSave")
     public WebElement saveButton;
 
+    @FindBy(id = "employeeId")
+    public WebElement employeeID;
+
     @FindBy(xpath = "//div[@id='profile-pic']/h1")
     public WebElement employeeNameVerifyText;
 
