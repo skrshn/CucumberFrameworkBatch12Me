@@ -15,6 +15,7 @@ import steps.PageInitializers;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -52,12 +53,16 @@ public class CommonMethods extends PageInitializers {
         element.sendKeys(textToSend);
     }
 
+    public static String getTextByValue(WebElement element) {
+        return element.getAttribute("value");
+    }
+
     public static String getText(WebElement element) {
         return element.getText();
     }
 
     public static WebDriverWait getWait() {
-        WebDriverWait wait = new WebDriverWait(driver, Constants.EXPLICIT_WAIT);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT));
         return wait;
     }
 

@@ -3,7 +3,6 @@ package steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import pages.LoginPage;
 import utils.CommonMethods;
 import utils.ConfigReader;
 
@@ -22,7 +21,7 @@ public class LoginSteps extends CommonMethods {
 
     @Then("ess user is successfully logged in")
     public void essUserIsSuccessfullyLoggedIn() {
-        System.out.println("Ess user is successfully logged in.");
+        Assert.assertTrue(dashboardPage.welcomeMessage.isDisplayed());
         //tearDown();
     }
 
@@ -46,6 +45,7 @@ public class LoginSteps extends CommonMethods {
     @Then("user see username cannot be empty error message on the screen")
     public void userSeeUsernameCannotBeEmptyErrorMessageOnTheScreen() {
         Assert.assertTrue(loginPage.userNameCannotBeEmptyErrorMessage.isDisplayed());
+
     }
 
     @When("user enters a username and empty password")

@@ -3,20 +3,26 @@ package steps;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import utils.CommonMethods;
 import utils.Constants;
-import utils.CustomSoftAsserts;
+import utils.DBUtils;
 import utils.ExcelReader;
 
 import java.util.*;
 
 public class EmployeeAddSteps extends CommonMethods {
+    String empId;
+    String dbEmpId;
+    String firstName;
+    String dbFirstName;
+
     @When("user clicks on PIM option")
     public void userClicksOnPIMOption() {
         click(emSearchPage.pimOption);
@@ -124,4 +130,28 @@ public class EmployeeAddSteps extends CommonMethods {
             click(emSearchPage.addEmpOption);
         }
     }
+
+    @And("user grabs the employee ID")
+    public void userGrabsTheEmployeeID() {
+        empId = getTextByValue(emAddPage.employeeID);
+        firstName = getTextByValue(emAddPage.firstName);
+    }
+
+    @And("user queries the database for same employee ID")
+    public void userQueriesTheDatabaseForSameEmployeeID() {
+        String query = "Select * FROM syntaxhrm_mysql.hs_hr_employees where employee_id = " + empId;
+        dbFirstName = DBUtils.getListOfMapFromResultSet(query).get(0).get("emp_firstname");
+        dbEmpId = DBUtils.getListOfMapFromResultSet(query).get(0).get("employee_id");
+    }
+
+    @Then("user verifies the results")
+    public void userVerifiesTheResults() {
+        System.out.println("First name from Front-End : " + firstName);
+        System.out.println("First name from DB : " + dbFirstName);
+        System.out.println("Employee ID from Front-End : " + empId);
+        System.out.println("Employee ID from DB : " + dbEmpId);
+        Assert.assertEquals(firstName,dbFirstName);
+        Assert.assertEquals(empId,dbEmpId);
+    }
+
 }

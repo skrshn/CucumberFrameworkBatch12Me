@@ -13,10 +13,13 @@ Feature: Adding employees in HRMS Application
     And user clicks on save button
     Then user is able to add employee successfully
 
+    @ETETest1
   Scenario: Adding one Employee from cucumber feature file
     When user enters "sakir" "sako" and "sahin"
+    And user grabs the employee ID
     And user clicks on save button
-    Then user is able to add employee successfully
+    And user queries the database for same employee ID
+    Then user verifies the results
 
   @test @datatable
   Scenario Outline: Adding multiple Employees

@@ -1,0 +1,162 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 2216517000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "a JWT is generated",
+            "match": {
+              "location": "APISteps.GenerateTokenSteps.aJWTIsGenerated()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "start_timestamp": "2022-06-20T01:27:07.347Z",
+        "line": 34,
+        "name": "Adding an employee using dynamic scenario",
+        "description": "",
+        "id": "this-feature-covers-all-the-api-related-scenarios;adding-an-employee-using-dynamic-scenario",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 4943000,
+              "status": "passed"
+            },
+            "line": 35,
+            "name": "a request is prepared to create an employee via dynamic payload \"sak\", \"shn\", \"zak\", \"M\", \"1990-06-12\", \"OFF\", \"IT MANAGER\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "\"sak\"",
+                  "offset": 64
+                },
+                {
+                  "val": "\"shn\"",
+                  "offset": 71
+                },
+                {
+                  "val": "\"zak\"",
+                  "offset": 78
+                },
+                {
+                  "val": "\"M\"",
+                  "offset": 85
+                },
+                {
+                  "val": "\"1990-06-12\"",
+                  "offset": 90
+                },
+                {
+                  "val": "\"OFF\"",
+                  "offset": 104
+                },
+                {
+                  "val": "\"IT MANAGER\"",
+                  "offset": 111
+                }
+              ],
+              "location": "APISteps.APIWorkflowSteps.aRequestIsPreparedToCreateAnEmployeeViaDynamicPayload(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 644525000,
+              "status": "passed"
+            },
+            "line": 36,
+            "name": "a POST call is made to create an employee",
+            "match": {
+              "location": "APISteps.APIWorkflowSteps.aPOSTCallIsMadeToCreateAnEmployee()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 21798000,
+              "status": "passed"
+            },
+            "line": 37,
+            "name": "the status code for the created employee is 201",
+            "match": {
+              "arguments": [
+                {
+                  "val": "201",
+                  "offset": 44
+                }
+              ],
+              "location": "APISteps.APIWorkflowSteps.theStatusCodeForTheCreatedEmployeeIs(int)"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 39589000,
+              "status": "passed"
+            },
+            "line": 38,
+            "name": "the employee created contains key \"Message\" and value \"Employee Created\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "\"Message\"",
+                  "offset": 34
+                },
+                {
+                  "val": "\"Employee Created\"",
+                  "offset": 54
+                }
+              ],
+              "location": "APISteps.APIWorkflowSteps.theEmployeeCreatedContainsKeyAndValue(java.lang.String,java.lang.String)"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 13063000,
+              "status": "passed"
+            },
+            "line": 39,
+            "name": "the employee id \"Employee.employee_id\" is stored as a global variable to be used for other calls",
+            "match": {
+              "arguments": [
+                {
+                  "val": "\"Employee.employee_id\"",
+                  "offset": 16
+                }
+              ],
+              "location": "APISteps.APIWorkflowSteps.theEmployeeIdIsStoredAsAGlobalVariableToBeUsedForOtherCalls(java.lang.String)"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@dynamic"
+          }
+        ]
+      }
+    ],
+    "name": "This feature covers all the API related scenarios",
+    "description": "",
+    "id": "this-feature-covers-all-the-api-related-scenarios",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/APIWorkFlow.feature",
+    "tags": []
+  }
+]

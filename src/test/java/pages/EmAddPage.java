@@ -44,6 +44,7 @@ public class EmAddPage extends CommonMethods {
     @FindBy(xpath = " //select[@id='status']")
     public WebElement employeeStatus;
 
+
     public EmAddPage() {
         PageFactory.initElements(driver, this);
     }

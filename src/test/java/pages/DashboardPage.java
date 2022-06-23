@@ -10,12 +10,13 @@ import java.util.List;
 public class DashboardPage extends CommonMethods {
 
     @FindBy(xpath = "//*[@class='menu']/ul/li")
-    public List<WebElement> navTabs;
+    public static List<WebElement> navTabs;
 
     @FindBy(xpath = "//a[@id='welcome']")
-    public WebElement welcomeMessage;
+    public static WebElement welcomeMessage;
+
 
     public DashboardPage() {
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 }
