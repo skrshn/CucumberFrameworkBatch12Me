@@ -16,7 +16,7 @@ Feature: US-12345 - Search an employee in HRMS Application
     And clicks on search button
     Then user is able to see employee information
 
-  @smoke
+    @smoke
   Scenario: Search an employee by name
 #    Given user is navigated to HRMS Application
 #    When user enters valid admin credentials

@@ -9,7 +9,7 @@ Feature: Validation of login scenarios
     And user clicks on login button
     Then admin user is successfully logged in
 
-  @regression @smoke @logintest
+  @regression @logintest
   Scenario: ESS login
     When user enters valid ess username and password
     And user clicks on login button
